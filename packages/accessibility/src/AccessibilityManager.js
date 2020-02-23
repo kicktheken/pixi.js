@@ -315,14 +315,15 @@ export class AccessibilityManager
                 div = child._accessibleDiv;
                 let hitArea = child.hitArea;
                 const wt = child.worldTransform;
+                const dpr = this.renderer.resolution;
 
                 if (child.hitArea)
                 {
-                    div.style.left = `${(wt.tx + (hitArea.x * wt.a)) * sx}px`;
-                    div.style.top = `${(wt.ty + (hitArea.y * wt.d)) * sy}px`;
+                    div.style.left = `${(wt.tx + (hitArea.x * wt.a * dpr)) * sx}px`;
+                    div.style.top = `${(wt.ty + (hitArea.y * wt.d * dpr)) * sy}px`;
 
-                    div.style.width = `${hitArea.width * wt.a * sx}px`;
-                    div.style.height = `${hitArea.height * wt.d * sy}px`;
+                    div.style.width = `${hitArea.width * wt.a * dpr * sx}px`;
+                    div.style.height = `${hitArea.height * wt.d * dpr * sy}px`;
                 }
                 else
                 {
@@ -330,11 +331,11 @@ export class AccessibilityManager
 
                     this.capHitArea(hitArea);
 
-                    div.style.left = `${hitArea.x * sx}px`;
-                    div.style.top = `${hitArea.y * sy}px`;
+                    div.style.left = `${hitArea.x * dpr * sx}px`;
+                    div.style.top = `${hitArea.y * dpr * sy}px`;
 
-                    div.style.width = `${hitArea.width * sx}px`;
-                    div.style.height = `${hitArea.height * sy}px`;
+                    div.style.width = `${hitArea.width * dpr * sx}px`;
+                    div.style.height = `${hitArea.height * dpr * sy}px`;
 
                     // update button titles and hints if they exist and they've changed
                     if (div.title !== child.accessibleTitle && child.accessibleTitle !== null)
